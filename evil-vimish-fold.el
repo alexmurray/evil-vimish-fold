@@ -69,7 +69,7 @@ See also `evil-create-fold'."
                :toggle     vimish-fold-toggle
                :open       vimish-fold-unfold
                :open-rec   nil
-               :close      vimish-fold))
+               :close      vimish-fold-refold))
 
 (provide 'evil-vimish-fold)
 
