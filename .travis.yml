@@ -5,7 +5,7 @@ env:
 
 matrix:
   allow_failures:
-    - env: EMACS=emacs-snapshot
+    - env: EMACS=emacs24
 
 before_install:
   - git submodule --quiet update --init --recursive
