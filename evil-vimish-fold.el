@@ -6,7 +6,7 @@
 ;; Maintainer: Alex Murray <murray.alex@gmail.com>
 ;; URL: https://github.com/alexmurray/evil-vimish-fold
 ;; Version: 0.1
-;; Package-Requires: ((evil "1.0.0") (vimish-fold "0.2.0") (emacs "24.4"))
+;; Package-Requires: ((emacs "24.4") (evil "1.0.0") (vimish-fold "0.2.0"))
 
 ;; This file is not part of GNU Emacs.
 
