@@ -65,17 +65,6 @@ See also `evil-delete-fold'."
 See also `evil-create-fold'."
   (evil-fold-action evil-fold-list :delete))
 
-
-(add-to-list 'evil-fold-list
-             `((vimish-fold-mode)
-               :delete     vimish-fold-delete
-               :open-all   vimish-fold-unfold-all
-               :close-all  vimish-fold-refold-all
-               :toggle     vimish-fold-toggle
-               :open       vimish-fold-unfold
-               :open-rec   nil
-               :close      vimish-fold-refold))
-
 ;;;###autoload
 (define-minor-mode evil-vimish-fold-mode
   "Evil-vimish-fold-mode."
@@ -86,7 +75,20 @@ See also `evil-create-fold'."
             (evil-define-key 'motion map "zf" 'evil-vimish-fold/create)
             (evil-define-key 'motion map "zF" 'evil-vimish-fold/create-line)
             map)
-  (vimish-fold-global-mode (if evil-vimish-fold-mode 1 -1)))
+  (vimish-fold-global-mode (if evil-vimish-fold-mode 1 -1))
+  (if evil-vimish-fold-mode
+      (add-to-list 'evil-fold-list
+                   `((vimish-fold-mode)
+                     :delete     vimish-fold-delete
+                     :open-all   vimish-fold-unfold-all
+                     :close-all  vimish-fold-refold-all
+                     :toggle     vimish-fold-toggle
+                     :open       vimish-fold-unfold
+                     :open-rec   nil
+                     :close      vimish-fold-refold))
+    (setq evil-fold-list (remove-if
+                          #'(lambda (e) (eq (caar e) 'vimish-fold-mode))
+                          evil-fold-list))))
 
 (provide 'evil-vimish-fold)
 
