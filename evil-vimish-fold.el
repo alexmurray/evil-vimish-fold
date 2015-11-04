@@ -46,10 +46,11 @@
            (point-min)
            (point-max)))))
 
-(evil-define-command evil-create-fold ()
+(evil-define-operator evil-create-fold (beg end)
   "Create a fold from the current region.
 See also `evil-delete-fold'."
-  (evil-fold-action evil-fold-list :create))
+  (when vimish-fold-mode
+    (vimish-fold beg end)))
 
 (evil-define-command evil-delete-fold ()
   "Delete a fold under point.
@@ -57,12 +58,10 @@ See also `evil-create-fold'."
   (evil-fold-action evil-fold-list :delete))
 
 (define-key evil-normal-state-map "zd" 'evil-delete-fold)
-(define-key evil-visual-state-map "zf" 'evil-create-fold)
+(define-key evil-normal-state-map "zf" 'evil-create-fold)
 
 (add-to-list 'evil-fold-list
              `((vimish-fold-mode)
-               :create     ,(lambda ()
-                              (vimish-fold (region-beginning) (region-end)))
                :delete     vimish-fold-delete
                :open-all   vimish-fold-unfold-all
                :close-all  vimish-fold-refold-all
