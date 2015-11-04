@@ -57,8 +57,8 @@ See also `evil-delete-fold'."
 See also `evil-create-fold'."
   (evil-fold-action evil-fold-list :delete))
 
-(define-key evil-normal-state-map "zd" 'evil-delete-fold)
-(define-key evil-normal-state-map "zf" 'evil-create-fold)
+(define-key evil-motion-state-map "zd" 'evil-delete-fold)
+(define-key evil-motion-state-map "zf" 'evil-create-fold)
 
 (add-to-list 'evil-fold-list
              `((vimish-fold-mode)
