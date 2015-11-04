@@ -36,16 +36,6 @@
 (require 'evil)
 (require 'vimish-fold)
 
-;; define commands which may not be in upstream packages yet
-(unless (fboundp 'vimish-fold-refold-all)
-  (defun vimish-fold-refold-all ()
-    "Refold all closed folds in current buffer."
-    (interactive)
-    (mapc #'vimish-fold--refold
-          (vimish-fold--folds-in
-           (point-min)
-           (point-max)))))
-
 (evil-define-operator evil-vimish-fold/create (beg end)
   "Create a fold from the current region.
 See also `evil-delete-fold'."
