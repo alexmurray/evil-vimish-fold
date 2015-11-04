@@ -35,6 +35,8 @@
 
 (require 'evil)
 (require 'vimish-fold)
+(eval-when-compile
+  '(require 'cl-lib))
 
 (evil-define-operator evil-vimish-fold/create (beg end)
   "Create a fold from the current region.
@@ -76,7 +78,7 @@ See also `evil-create-fold'."
                      :open       vimish-fold-unfold
                      :open-rec   nil
                      :close      vimish-fold-refold))
-    (setq evil-fold-list (remove-if
+    (setq evil-fold-list (cl-remove-if
                           #'(lambda (e) (eq (caar e) 'vimish-fold-mode))
                           evil-fold-list))))
 
