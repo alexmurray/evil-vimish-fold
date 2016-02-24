@@ -35,41 +35,52 @@
 
 (require 'evil)
 (require 'vimish-fold)
+(eval-when-compile
+  '(require 'cl-lib))
 
-;; define commands which may not be in upstream packages yet
-(unless (fboundp 'vimish-fold-refold-all)
-  (defun vimish-fold-refold-all ()
-    "Refold all closed folds in current buffer."
-    (interactive)
-    (mapc #'vimish-fold--refold
-          (vimish-fold--folds-in
-           (point-min)
-           (point-max)))))
-
-(evil-define-command evil-create-fold ()
+(evil-define-operator evil-vimish-fold/create (beg end)
   "Create a fold from the current region.
 See also `evil-delete-fold'."
-  (evil-fold-action evil-fold-list :create))
+  (when vimish-fold-mode
+    (vimish-fold beg end)))
 
-(evil-define-command evil-delete-fold ()
+(evil-define-operator evil-vimish-fold/create-line (beg end)
+  "Create a fold from the current region.
+See also `evil-delete-fold'."
+  :motion evil-line
+  (interactive "<r>")
+  (when vimish-fold-mode
+    (vimish-fold beg end)))
+
+(evil-define-command evil-vimish-fold/delete ()
   "Delete a fold under point.
 See also `evil-create-fold'."
   (evil-fold-action evil-fold-list :delete))
 
-(define-key evil-normal-state-map "zd" 'evil-delete-fold)
-(define-key evil-visual-state-map "zf" 'evil-create-fold)
-
-(add-to-list 'evil-fold-list
-             `((vimish-fold-mode)
-               :create     ,(lambda ()
-                              (vimish-fold (region-beginning) (region-end)))
-               :delete     vimish-fold-delete
-               :open-all   vimish-fold-unfold-all
-               :close-all  vimish-fold-refold-all
-               :toggle     vimish-fold-toggle
-               :open       vimish-fold-unfold
-               :open-rec   nil
-               :close      vimish-fold-refold))
+;;;###autoload
+(define-minor-mode evil-vimish-fold-mode
+  "Evil-vimish-fold-mode."
+  :global t
+  :lighter " zf"
+  :keymap (let ((map (make-sparse-keymap)))
+            (evil-define-key 'motion map "zd" 'evil-vimish-fold/delete)
+            (evil-define-key 'motion map "zf" 'evil-vimish-fold/create)
+            (evil-define-key 'motion map "zF" 'evil-vimish-fold/create-line)
+            map)
+  (vimish-fold-global-mode (if evil-vimish-fold-mode 1 -1))
+  (if evil-vimish-fold-mode
+      (add-to-list 'evil-fold-list
+                   `((vimish-fold-mode)
+                     :delete     vimish-fold-delete
+                     :open-all   vimish-fold-unfold-all
+                     :close-all  vimish-fold-refold-all
+                     :toggle     vimish-fold-toggle
+                     :open       vimish-fold-unfold
+                     :open-rec   nil
+                     :close      vimish-fold-refold))
+    (setq evil-fold-list (cl-remove-if
+                          #'(lambda (e) (eq (caar e) 'vimish-fold-mode))
+                          evil-fold-list))))
 
 (provide 'evil-vimish-fold)
 
