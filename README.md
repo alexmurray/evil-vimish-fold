@@ -18,9 +18,14 @@ This provides a near-complete vim folding experience in evil for Emacs.
 ### MELPA
 
 The preferred way to install `evil-vimish-fold` is via
-[MELPA](http://melpa.org) - then you can just <kbd>M-x package-install RET
-evil-vimish-fold RET</kbd>
+[MELPA](http://melpa.org) - then you can just <kbd>M-x package-install
+RET evil-vimish-fold RET</kbd> then temporarily enable it with
+<kbd>M-x evil-vimish-fold-mode</kbd> or permanently by putting this in
+your `init.el`:
 
+```emacs-lisp
+(evil-vimish-fold-mode 1)
+```
 ### Manual
 
 If you would like to install the package manually, download or clone it and
@@ -29,6 +34,7 @@ this:
 
 ```emacs-lisp
 (require 'evil-vimish-fold)
+(evil-vimish-fold-mode 1)
 ```
 
 NOTE: This will also require the manual installation of `evil` and `vimish-fold`
