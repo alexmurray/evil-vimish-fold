@@ -35,8 +35,7 @@
 
 (require 'evil)
 (require 'vimish-fold)
-(eval-when-compile
-  '(require 'cl-lib))
+(require 'cl-lib)
 
 (evil-define-operator evil-vimish-fold/create (beg end)
   "Create a fold from the current region.
