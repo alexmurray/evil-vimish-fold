@@ -1,16 +1,18 @@
+language: generic
 sudo: false
 env:
+  - EVM_EMACS=emacs-24.3-travis
+  - EVM_EMACS=emacs-24.4-travis
   - EVM_EMACS=emacs-24.5-travis
 
 before_install:
   - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > x.sh && source ./x.sh
   - evm install $EVM_EMACS --use --skip
-
-install:
-  - export PATH="/home/travis/.cask/bin:$PATH"
-  - cask install
+  - cask
 
 script:
+  - emacs --version
+  - export PATH="/home/travis/.cask/bin:$PATH"
   - cask build
 
 notifications:
