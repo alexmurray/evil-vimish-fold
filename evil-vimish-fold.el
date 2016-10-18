@@ -56,12 +56,30 @@ See also `evil-delete-fold'."
 See also `evil-create-fold'."
   (evil-fold-action evil-fold-list :delete))
 
+(evil-define-motion evil-vimish-fold/next-fold (count)
+  "Go to the start of the next fold."
+  :type inclusive
+  (when vimish-fold-mode
+    (dotimes (_ count nil)
+      (vimish-fold-next-fold))))
+
+(evil-define-motion evil-vimish-fold/previous-fold (count)
+  "Go to the start of the previous fold."
+  :type inclusive
+  (when vimish-fold-mode
+    (dotimes (_ count nil)
+      (vimish-fold-previous-fold))))
+
 ;;;###autoload
 (define-minor-mode evil-vimish-fold-mode
   "Evil-vimish-fold-mode."
   :global t
   :lighter " zf"
   :keymap (let ((map (make-sparse-keymap)))
+            (evil-define-key 'normal map "zj" 'evil-vimish-fold/next-fold)
+            (evil-define-key 'motion map "zj" 'evil-vimish-fold/next-fold)
+            (evil-define-key 'normal map "zk" 'evil-vimish-fold/previous-fold)
+            (evil-define-key 'motion map "zk" 'evil-vimish-fold/previous-fold)
             (evil-define-key 'motion map "zd" 'evil-vimish-fold/delete)
             (evil-define-key 'motion map "zf" 'evil-vimish-fold/create)
             (evil-define-key 'motion map "zF" 'evil-vimish-fold/create-line)
