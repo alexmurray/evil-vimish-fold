@@ -10,6 +10,8 @@ Adds standard vim keybindings of <kbd>zf</kbd> and <kbd>zd</kbd> to create and d
 `vimish-fold`) respectively. Also hooks into `evil` so the usual vim
 keybindings for fold toggling (<kbd>za</kbd>), opening (<kbd>zo</kbd>), closing (<kbd>zc</kbd>) etc all work as expected with `vimish-fold`.
 
+Finally, also supports navigation between folds using <kbd>zj</kbd> and <kbd>zk</kbd>.
+
 This provides a near-complete vim folding experience in evil for Emacs.
 
 
