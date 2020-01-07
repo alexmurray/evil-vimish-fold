@@ -83,7 +83,6 @@ See also `evil-create-fold'."
 ;;;###autoload
 (define-minor-mode evil-vimish-fold-mode
   "Evil-vimish-fold-mode."
-  :global t
   :lighter " zf"
   :keymap (let ((map (make-sparse-keymap)))
             (evil-define-key 'normal map "zj" 'evil-vimish-fold/next-fold)
@@ -95,7 +94,7 @@ See also `evil-create-fold'."
             (evil-define-key 'motion map "zf" 'evil-vimish-fold/create)
             (evil-define-key 'motion map "zF" 'evil-vimish-fold/create-line)
             map)
-  (vimish-fold-global-mode (if evil-vimish-fold-mode 1 -1))
+  (vimish-fold-mode (if evil-vimish-fold-mode 1 -1))
   (if evil-vimish-fold-mode
       (add-to-list 'evil-fold-list
                    `((vimish-fold-mode)
