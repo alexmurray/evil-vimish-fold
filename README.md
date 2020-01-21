@@ -20,14 +20,10 @@ This provides a near-complete vim folding experience in evil for Emacs.
 ### MELPA
 
 The preferred way to install `evil-vimish-fold` is via
-[MELPA](http://melpa.org) - then you can just <kbd>M-x package-install
-RET evil-vimish-fold RET</kbd> then temporarily enable it with
-<kbd>M-x evil-vimish-fold-mode</kbd> or permanently by putting this in
-your `init.el`:
+[MELPA](http://melpa.org). You can just <kbd>M-x package-install RET
+evil-vimish-fold RET</kbd>.
 
-```emacs-lisp
-(evil-vimish-fold-mode 1)
-```
+
 ### Manual
 
 If you would like to install the package manually, download or clone it and
@@ -36,11 +32,73 @@ this:
 
 ```emacs-lisp
 (require 'evil-vimish-fold)
-(evil-vimish-fold-mode 1)
 ```
 
 NOTE: This will also require the manual installation of `evil` and `vimish-fold`
 if you have not done so already.
+
+## Configuration
+
+You can configure `evil-vimish-fold` to run on a per mode basis using hooks
+or as a global mode activated on specific modes.
+
+By default, `global-evil-vimish-fold-mode` will enable
+`evil-vimish-fold-mode` in modes derived from those specified in
+`evil-vimish-fold-target-modes`. By default `evil-vimish-fold-target-modes`
+is set to `prog-mode` (and thus all modes derived from `prog-mode`). This
+will allow you to avoid having `evil-vimish-mode` enabled in modes where its
+key bindings conflict, e.g., magit.
+
+### Vanilla configuration examples
+
+Per mode (no use of global mode):
+
+```emacs-lisp
+(add-hook 'prog-mode-hook 'evil-vimish-fold-mode)
+(add-hook 'text-mode-hook 'evil-vimish-fold-mode)
+```
+
+Globally for a set of modes:
+
+```emacs-lisp
+(setq evil-vimish-fold-target-modes '(prog-mode conf-mode text-mode))
+(global-evil-vimish-fold-mode 1)
+```
+
+### use-package configuration examples
+
+A configuration using mode hooks (no use of global mode):
+
+```emacs-lisp
+(use-package vimish-fold
+  :ensure
+  :after evil)
+
+(use-package evil-vimish-fold
+  :ensure
+  :after vimish-fold
+  :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode))
+```
+
+or
+
+A configuration that sets the lighter, i.e., visual indicator of the mode's activation in the modeline, sets target modes, then turns on global mode:
+
+```emacs-lisp
+(use-package vimish-fold
+  :ensure
+  :after evil)
+
+(use-package evil-vimish-fold
+  :ensure
+  :after vimish-fold
+  :init
+  (setq evil-vimish-fold-mode-lighter " ⮒")
+  (setq evil-vimish-fold-target-modes '(prog-mode conf-mode text-mode))
+  :config
+  (global-evil-vimish-fold-mode))
+```
+
 
 ## License
 
